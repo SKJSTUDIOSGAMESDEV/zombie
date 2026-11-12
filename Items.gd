@@ -21,6 +21,9 @@ var Item1 = {
 	"avon": {"name": "", "icon": preload("res://icons/avon.png"), "much": 0, "has_i": false},
 	"bake_Corn": {"name": "", "icon": preload("res://icons/bake_corn.png"), "much": 0, "has_i": false},
 	"bake_egg": {"name": "", "icon": preload("res://icons/bake_egg.png"), "much": 0, "has_i": false},
+	"wire": {"name": "", "icon": preload("res://icons/wire.png"), "much": 0, "has_i": false},
+	"spring": {"name": "", "icon": preload("res://icons/spring.png"), "much": 0, "has_i": false},
+	"pipe": {"name": "", "icon": preload("res://icons/pipe.png"), "much": 0, "has_i": false},
 }
 
 # ITEMS.GD (Global Script) mein ye function theek karein:
@@ -44,6 +47,8 @@ var CraftingRecipes = {
 	"axe": {"wood": 5, "stone": 3, "iron_ingot": 1},
 	"pickaxe": {"wood": 5, "stone": 6, "iron_ingot": 1},
 	"avon": {"stone": 9},
+	"spring": {"wire": 2},
+	"pipe": {"wire": 2, "spring": 1, "iron_ingot": 1},
 	
 	
 }
