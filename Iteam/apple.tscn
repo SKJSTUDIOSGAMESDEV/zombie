@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b7qb2ne4bvt8g"]
+
+[sub_resource type="GDScript" id="GDScript_pikby"]
+resource_name = "apple"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"apple\", 1)
+	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7b7a"]
+size = Vector3(0.71, 0.565, 0.58)
+
+[node name="apple" type="RigidBody3D" unique_id=416658290 groups=["item"]]
+script = SubResource("GDScript_pikby")
+
+[node name="a" type="CollisionShape3D" parent="." unique_id=2086033432]
+shape = SubResource("BoxShape3D_g7b7a")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=899640465]
+billboard = 1
+text = "🍎"
+font_size = 122
+
+[node name="Timer" type="Timer" parent="." unique_id=1140375544]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://dwuetdi2hnf2n"]
+
+[ext_resource type="Texture2D" uid="uid://de067ym4b0ymk" path="res://icons/iron_ore.png" id="1_e4jla"]
+
+[sub_resource type="GDScript" id="GDScript_g7b7a"]
+resource_name = "iron_ore"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"iron_ore\", 1)
+	queue_free()
+
+func _on_timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kwmpl"]
+size = Vector3(0.75, 0.56, 0.845)
+
+[node name="iron_ore" type="RigidBody3D" unique_id=789490513 groups=["item"]]
+script = SubResource("GDScript_g7b7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=270220255]
+shape = SubResource("BoxShape3D_kwmpl")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1876207955]
+pixel_size = 0.008
+billboard = 1
+texture = ExtResource("1_e4jla")
+
+[node name="Timer" type="Timer" parent="." unique_id=1343550258]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

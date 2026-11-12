@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://842wsseu2bye"]
+
+[ext_resource type="Texture2D" uid="uid://pi3jenq6gydn" path="res://icons/bake_corn.png" id="1_y32iw"]
+
+[sub_resource type="GDScript" id="GDScript_y32iw"]
+resource_name = "bake_corn"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"bake_Corn\", 1)
+	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	queue_free() # Replace with function body.
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7b7a"]
+size = Vector3(0.46, 0.705, 0.415)
+
+[node name="bake_corn" type="RigidBody3D" unique_id=1353447928 groups=["item"]]
+script = SubResource("GDScript_y32iw")
+
+[node name="c" type="CollisionShape3D" parent="." unique_id=455686821]
+shape = SubResource("BoxShape3D_g7b7a")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=949352135]
+pixel_size = 0.005
+billboard = 1
+texture = ExtResource("1_y32iw")
+
+[node name="Timer" type="Timer" parent="." unique_id=115011955]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

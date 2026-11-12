@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://btl3synhh4iva"]
+
+[sub_resource type="GDScript" id="GDScript_gyc6d"]
+resource_name = "strawberry"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"strawberry\", 1)
+	queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7b7a"]
+size = Vector3(0.625, 0.59, 0.605)
+
+[node name="strawberry" type="RigidBody3D" unique_id=797163230 groups=["item"]]
+script = SubResource("GDScript_gyc6d")
+
+[node name="s" type="CollisionShape3D" parent="." unique_id=2116606309]
+shape = SubResource("BoxShape3D_g7b7a")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=977525900]
+pixel_size = 0.02
+billboard = 1
+text = "🍓"

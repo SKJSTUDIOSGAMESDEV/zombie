@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://w24j3eap2b4w"]
+
+[ext_resource type="Texture2D" uid="uid://c28s5s6cuvx1p" path="res://icons/iron_ingot.png" id="1_lfaii"]
+
+[sub_resource type="GDScript" id="GDScript_lfaii"]
+resource_name = "iron_ingot"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"iron_ingot\", 1)
+	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	queue_free() # Replace with function body.
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7b7a"]
+size = Vector3(0.935, 0.61, 1.08)
+
+[node name="iron_ingot" type="RigidBody3D" unique_id=890700824 groups=["item"]]
+script = SubResource("GDScript_lfaii")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1008874279]
+shape = SubResource("BoxShape3D_g7b7a")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=132152299]
+pixel_size = 0.008
+billboard = 1
+texture = ExtResource("1_lfaii")
+
+[node name="Timer" type="Timer" parent="." unique_id=1516017413]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

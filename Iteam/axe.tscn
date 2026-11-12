@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://ihad8w7cjl8c"]
+
+[ext_resource type="ArrayMesh" uid="uid://c01joy40hhxvq" path="res://3d_modle/axe.res" id="1_3mk3t"]
+
+[sub_resource type="GDScript" id="GDScript_3mk3t"]
+resource_name = "axe"
+script/source = "extends RigidBody3D
+
+
+
+func pp():
+	Items.add_item_to_inventory(\"axe\", 1)
+	queue_free()
+	
+	
+func fz():
+	freeze = true
+	$CollisionShape3D.set_deferred(\"disabled\", true)
+	
+func att():
+	var anim = [\"attck\" ,\"attck2\",\"attck3\"]
+	var play = anim.pick_random()
+	if ! $AnimationPlayer.is_playing():
+		$AnimationPlayer.play(play)
+		await $AnimationPlayer.animation_finished
+		$Axe/RayCast3D.force_raycast_update()
+		if $Axe/RayCast3D.is_colliding():
+			var rr = $Axe/RayCast3D.get_collider()
+			if rr.is_in_group(\"tree\"):
+				if rr.has_method(\"take_damage\"):
+					rr.take_damage(20)
+"
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3mk3t"]
+points = PackedVector3Array(0, -4.4517617, -8.022236, 0.18039703, -4.001925, -7.9926553, 0, -4.4422503, -6.819767, -0.18063593, -4.001925, -7.9926553, 0, -4.3202796, -9.224706, 0.94857776, -0.9448259, -7.43949, 0.94857776, -0.96272993, -6.821246, 0.18039703, -3.9924135, -6.8567433, 0.18039703, -3.8704429, -9.127089, 0.94857776, -0.90901804, -8.674499, -0.18063593, -3.9924135, -6.8567433, 0.8580209, -1.0058112, 5.085124, 0, -4.291745, -5.603986, -0.8584987, -1.0058112, 5.085124, -0.9488167, -0.96272993, -6.821246, -0.9488167, -0.9448259, -7.43949, -0.9488167, -0.90901804, -8.674499, -0.18063593, -3.8704429, -9.127089, 0.8190743, -0.57723546, -8.875649, -0.8190742, -0.57723546, -8.875649, -0.8190742, 1.060976, -8.875649, 0.8190743, 1.060976, -8.875649, 1.2204875, 0.17696857, -8.57836, 1.2204875, 0.17696857, -6.800539, 0.8580209, -0.4463129, 5.885291, -0.8584987, -0.4463129, 5.885291, -1.2204875, 0.17696857, -6.800539, -1.2204875, 0.17696857, -8.57836, -0.9488167, 1.2165165, -8.57836, 0.94857776, 1.2165165, -8.57836, 0.94857776, 1.2640738, -7.98526, 0.8580209, 0.6016278, 5.8527517, 0.94857776, 1.2640738, -7.39216, -0.8584987, 0.6016278, 5.8527517, -0.9488167, 1.2640738, -7.39216, -0.9488167, 1.2640738, -7.98526)
+
+[sub_resource type="Animation" id="Animation_3mk3t"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r0cco"]
+resource_name = "attck"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.3907101, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wihiv"]
+resource_name = "attck2"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.82728606, -1.9233528, -1.3002703), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_5umlv"]
+resource_name = "attck3"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Axe:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8113673, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.55850536, 1.6755161, 1.3526301), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wihiv"]
+_data = {
+&"RESET": SubResource("Animation_3mk3t"),
+&"attck": SubResource("Animation_r0cco"),
+&"attck2": SubResource("Animation_wihiv"),
+&"attck3": SubResource("Animation_5umlv")
+}
+
+[node name="axe" type="RigidBody3D" unique_id=1538616162 groups=["item"]]
+script = SubResource("GDScript_3mk3t")
+
+[node name="Axe" type="MeshInstance3D" parent="." unique_id=300057151]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = ExtResource("1_3mk3t")
+
+[node name="RayCast3D" type="RayCast3D" parent="Axe" unique_id=237711078]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, -7.6312933)
+hit_from_inside = true
+collide_with_areas = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=102225780]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_3mk3t")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=681017651]
+libraries/ = SubResource("AnimationLibrary_wihiv")

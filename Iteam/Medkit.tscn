@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://bt8ytmupy2q18"]
+
+[sub_resource type="GDScript" id="GDScript_bbu8f"]
+resource_name = "apply"
+script/source = "extends RigidBody3D
+
+# Inspector mein set karne ke liye variables
+# Taaki aap isi script ko Medkit, Ammo sab par use kar sakein
+@export var item_id: String = \"\" 
+@export var item_amount: int = 30
+
+# Ye function tab chalega jab koi bhi Node3D hamare PickupSensor (Area3D) ko touch karega
+func pp():
+	Items.add_item_to_inventory(item_id, item_amount)
+	print(item_id + \" utha liya!\") 
+	queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gskdh"]
+size = Vector3(0.285, 0.195, 0.205)
+
+[node name="Medkit" type="RigidBody3D" unique_id=2013993319 groups=["item"]]
+script = SubResource("GDScript_bbu8f")
+item_id = "medkit"
+item_amount = 1
+
+[node name="a" type="CollisionShape3D" parent="." unique_id=1839837788]
+shape = SubResource("BoxShape3D_gskdh")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1142846590]
+billboard = 1
+text = "💊"

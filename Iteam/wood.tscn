@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ptrfvd5c5nhu"]
+
+[sub_resource type="GDScript" id="GDScript_usbli"]
+resource_name = "wood"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"wood\", 1)
+	queue_free()
+
+
+func _on_timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_gyc6d"]
+height = 0.78
+radius = 0.325
+
+[node name="wood" type="RigidBody3D" unique_id=1803910641 groups=["item"]]
+script = SubResource("GDScript_usbli")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1699655421]
+shape = SubResource("CylinderShape3D_gyc6d")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1046726139]
+billboard = 1
+text = "🪵"
+font_size = 130
+outline_size = 66
+
+[node name="Timer" type="Timer" parent="." unique_id=367011439]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
