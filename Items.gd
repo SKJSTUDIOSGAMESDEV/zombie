@@ -24,6 +24,7 @@ var Item1 = {
 	"wire": {"name": "", "icon": preload("res://icons/wire.png"), "much": 0, "has_i": false},
 	"spring": {"name": "", "icon": preload("res://icons/spring.png"), "much": 0, "has_i": false},
 	"pipe": {"name": "", "icon": preload("res://icons/pipe.png"), "much": 0, "has_i": false},
+	"sword": {"name": "", "icon": preload("res://icons/sword.png"), "much": 0, "has_i": false},
 }
 
 # ITEMS.GD (Global Script) mein ye function theek karein:
@@ -49,6 +50,7 @@ var CraftingRecipes = {
 	"avon": {"stone": 9},
 	"spring": {"wire": 2},
 	"pipe": {"wire": 2, "spring": 1, "iron_ingot": 1},
+	"sword": {"iron_ingot": 2, "wood": 1, "stone": 1},
 	
 	
 }

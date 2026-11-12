@@ -7,7 +7,11 @@ resource_name = "pickaxe"
 script/source = "extends RigidBody3D
 
 @onready var ray_cast_hit: RayCast3D = $PickAxeV2/RayCast3D
+@onready var get_player = get_tree().get_first_node_in_group(\"PR\")
+var player
 
+func _ready() -> void:
+	player = get_player
 
 func pp():
 	Items.add_item_to_inventory(\"pickaxe\", 1)
@@ -20,8 +24,10 @@ func fz():
 func att():
 	$AnimationPlayer.play(\"att\")
 	await $AnimationPlayer.animation_finished
-		
-		
+	
+	if player.is_in_group(\"PR\"):
+		if player.has_method(\"camera_shaking\"):
+			player.camera_shaking(0.2)
 	
 	ray_cast_hit.force_raycast_update()
 	if ray_cast_hit.is_colliding():
@@ -172,7 +178,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.8075661, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, -0.5), Vector3(0, 0, 0), Vector3(0, 0, -2)]
+"values": [Vector3(0, 0, -0.5), Vector3(0, 0, 0), Vector3(0, 0, -0.2)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -230,7 +236,7 @@ mesh = SubResource("ArrayMesh_yhv7o")
 
 [node name="RayCast3D" type="RayCast3D" parent="PickAxeV2" unique_id=477696009]
 transform = Transform3D(-0.12772284, 1.3723312e-09, 0.48341167, -0.48341167, -2.1812566e-08, -0.12772284, 2.0738348e-08, -0.5000001, 6.8987296e-09, -0.027614474, 0.34734735, -1.522887e-08)
-target_position = Vector3(0.375, 0, -1)
+target_position = Vector3(0.375, 0, -3)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=913638337]
 transform = Transform3D(-0.5108915, -1.9336469, 3.0918306e-07, 2.045975e-08, -3.2519839e-07, -2, 1.9336469, -0.5108915, 1.02851516e-07, 0, 0, -0.5)

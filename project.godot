@@ -44,6 +44,7 @@ PR="this is player "
 tree="This is tree"
 stone=""
 Avon=""
+Weapon=""
 
 [input]
 

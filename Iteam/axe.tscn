@@ -6,7 +6,11 @@
 resource_name = "axe"
 script/source = "extends RigidBody3D
 
+@onready var get_player = get_tree().get_first_node_in_group(\"PR\")
+var player
 
+func _ready() -> void:
+	player = get_player
 
 func pp():
 	Items.add_item_to_inventory(\"axe\", 1)
@@ -23,6 +27,10 @@ func att():
 	if ! $AnimationPlayer.is_playing():
 		$AnimationPlayer.play(play)
 		await $AnimationPlayer.animation_finished
+		
+		if player.is_in_group(\"PR\"):
+			if player.has_method(\"camera_shaking\"):
+				player.camera_shaking(0.1)
 		$Axe/RayCast3D.force_raycast_update()
 		if $Axe/RayCast3D.is_colliding():
 			var rr = $Axe/RayCast3D.get_collider()

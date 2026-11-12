@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://ca1jndlut5fy2"]
+
+[ext_resource type="Texture2D" uid="uid://w5k345s6rwpk" path="res://icons/wire.png" id="1_ybhbm"]
+
+[sub_resource type="GDScript" id="GDScript_g7b7a"]
+resource_name = "wire"
+script/source = "extends RigidBody3D
+
+
+func pp():
+	Items.add_item_to_inventory(\"wire\", 1)
+	queue_free()
+
+func _on_timer_timeout() -> void:
+	queue_free()
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g7b7a"]
+size = Vector3(0.815, 0.715, 0.795)
+
+[node name="wire" type="RigidBody3D" unique_id=1416610497 groups=["item"]]
+script = SubResource("GDScript_g7b7a")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=650129000]
+shape = SubResource("BoxShape3D_g7b7a")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=828392793]
+billboard = 1
+texture = ExtResource("1_ybhbm")
+
+[node name="Timer" type="Timer" parent="." unique_id=1453748879]
+wait_time = 60.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

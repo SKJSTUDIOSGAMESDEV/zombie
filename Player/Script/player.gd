@@ -5,7 +5,7 @@ extends CharacterBody3D
 @onready var hand_ray_cast = $Head/RayCast3D
 @onready var bag_ui_container = $Bag
 @onready var hands_items_node: Node3D = $Head/hands_items # Weapon yahan aayega
-
+@onready var shaking_camera: Camera3D = $Head/Camera3D
 # UI NODES
 @onready var message_label: Label = $VBoxContainer/Label
 @onready var message_timer: Timer = $VBoxContainer/Timer
@@ -52,6 +52,7 @@ func _input(event: InputEvent) -> void:
 		HEAD.rotation.x = clampf(HEAD.rotation.x, -1.0472, 1.2217)
 
 func _physics_process(delta: float) -> void:
+	
 	$UI/FPS.text = str(Engine.get_frames_per_second())
 	$UI/HP.value = HP
 	$UI/Huger.value = huger
@@ -77,6 +78,8 @@ func _physics_process(delta: float) -> void:
 			# Future Proofing: Chahe haath mein Axe ho ya Gun, agar uski script mein "att" (attack) function hai, toh chal jayega.
 			if equipped_weapon.has_method("att"):
 				equipped_weapon.att()
+				
+				
 				
 		# 2. DROP/UNEQUIP KARNA (Item ko haath se hatakar inventory mein rakhna)
 		if Input.is_action_just_pressed("Hand_get"): # Aap chaho toh iske liye naya Drop key map kar sakte ho jaise "drop_key"
@@ -197,6 +200,27 @@ func _on_item_list_item_activated(index: int) -> void:
 			
 			
 			
+			
+		"sword":
+			if equipped_weapon != null:
+				show_warning_message("Pehle purana hathiyar bag mein daalo!")
+				return
+			Items.add_item_to_inventory("sword", -1)
+			var weapons = load("res://Iteam/sword.tscn")
+			var wepons_ = weapons.instantiate()
+			hands_items_node.add_child(wepons_)
+			wepons_.transform = Transform3D.IDENTITY
+			if wepons_.has_method("fz"):
+				wepons_.fz()
+			equipped_weapon = wepons_
+			equipped_weapon_id = "sword"
+			_on_x_pressed()
+
+
+
+
+
+
 		"avon":
 			# Raycast ko turant update karo taaki exact position mile
 			hand_ray_cast.force_raycast_update()
@@ -356,3 +380,21 @@ func _on_crafting_pressed() -> void:
 
 func _on_craft_xx_pressed() -> void:
 	$Carft.hide()
+	
+
+
+func camera_shaking(amount: float):
+	# Naya tween create karein
+	var tow = create_tween()
+	
+	# 5 baar tezi se random directions mein camera ko hilayenge (0.04 second per shake)
+	for i in range(5):
+		# randf_range se negative aur positive dono random numbers milenge
+		var random_x = randf_range(-amount, amount)
+		var random_y = randf_range(-amount, amount) 
+		
+		# Camera ko random position par bhejo
+		tow.tween_property(shaking_camera, "position", Vector3(random_x, random_y, 0), 0.04)
+		
+	# 5 jhatke lagne ke baad, camera ko aaram se wapas center (0,0,0) par le aao
+	tow.tween_property(shaking_camera, "position", Vector3(0, 0, 0), 0.1)
